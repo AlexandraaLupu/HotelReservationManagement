@@ -20,15 +20,19 @@ public class ReservationService {
         this.roomRepository = roomRepository;
     }
 
+    public List<Reservation> getReservationsForUser(Long userId) {
+        return reservationRepository.findByUserId(userId);
+    }
     public List<Reservation> getAllReservations() {
         return reservationRepository.findAll();
     }
     public Reservation bookRoom(Reservation reservation) {
+        // i set the check in time to be the date of tomorrow at 12:00
         LocalDateTime checkInTime = LocalDate.now().plusDays(1).atTime(12, 0);
         reservation.setCheckIn(checkInTime);
         Room bookedRoom = reservation.getRoom();
-        bookedRoom.setAvailable(false); // Mark room as unavailable
-        roomRepository.save(bookedRoom); // Update room availability in the database
+        bookedRoom.setAvailable(false);
+        roomRepository.save(bookedRoom);
         return reservationRepository.save(reservation);
     }
 
@@ -37,12 +41,12 @@ public class ReservationService {
         if (canceledReservation != null) {
             if (isModificationAllowed(canceledReservation.getCheckIn())) {
                 Room canceledRoom = canceledReservation.getRoom();
-//                canceledRoom.setIsAvailable(true); // Mark room as available
-                roomRepository.save(canceledRoom); // Update room availability in the database
+                canceledRoom.setAvailable(true);
+                roomRepository.save(canceledRoom);
                 reservationRepository.deleteById(id);
-                return true; // Reservation canceled successfully
+                return true;
             } else {
-                return false; // Reservation can only be canceled at least two hours before check-in
+                return false; // reservation can only be canceled at least two hours before check-in
             }
         }
         return false;
@@ -62,6 +66,7 @@ public class ReservationService {
         return null;
     }
 
+    // method for checking if there are at least 2 hours before the check in
     private boolean isModificationAllowed(LocalDateTime checkInTime) {
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime twoHoursBeforeCheckIn = checkInTime.minusHours(2);

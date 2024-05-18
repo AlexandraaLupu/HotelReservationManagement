@@ -51,15 +51,6 @@ public class Room {
         this.price = price;
     }
 
-//    public boolean isAvailable() {
-//        return isAvailable;
-//    }
-
-//    public void setIsAvailable(boolean isAvailable) {
-//        this.isAvailable = isAvailable;
-//    }
-
-
     public boolean isAvailable() {
         return available;
     }

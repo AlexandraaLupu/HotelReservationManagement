@@ -1,5 +1,6 @@
 package com.example.backend.models;
 
+// helper class for the json file
 public class RoomJSON {
     private int roomNumber;
 

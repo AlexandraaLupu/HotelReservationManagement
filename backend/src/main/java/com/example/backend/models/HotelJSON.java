@@ -2,6 +2,7 @@ package com.example.backend.models;
 
 import java.util.List;
 
+// helper class for the json file
 public class HotelJSON {
     private long id;
 

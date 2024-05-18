@@ -14,6 +14,11 @@ public class RoomService {
         this.roomRepository = roomRepository;
     }
 
+
+    public List<Room> getAllRooms() {
+        return roomRepository.findAll();
+    }
+
     public List<Room> findAvailableRooms(Long hotelId) {
         return roomRepository.findAvailableRoomsByHotelId(hotelId);
     }

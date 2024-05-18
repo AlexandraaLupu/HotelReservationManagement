@@ -20,8 +20,6 @@ public class Hotel {
     @Column(name = "longitude")
     private double longitude;
 
-//    @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    private List<Room> rooms;
 
     public Hotel() {
     }

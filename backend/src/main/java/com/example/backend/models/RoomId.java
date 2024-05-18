@@ -4,6 +4,7 @@ import jakarta.persistence.Embeddable;
 
 import java.io.Serializable;
 
+// the primary key for the room
 @Embeddable
 public class RoomId implements Serializable {
     private Long hotelId;

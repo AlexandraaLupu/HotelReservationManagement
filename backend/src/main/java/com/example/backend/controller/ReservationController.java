@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/reservations")
+@CrossOrigin(origins = "http://localhost:3000")
 public class ReservationController {
 
     private final ReservationService reservationService;
@@ -19,19 +20,26 @@ public class ReservationController {
         this.reservationService = reservationService;
     }
 
+    @GetMapping("/{userId}")
+    public ResponseEntity<List<Reservation>> getReservationsForUser(@PathVariable Long userId) {
+        List<Reservation> reservations = reservationService.getReservationsForUser(userId);
+            return ResponseEntity.ok(reservations);
+    }
+
+
     @PostMapping("/book")
     public ResponseEntity<Reservation> bookRoom(@RequestBody Reservation reservation) {
         Reservation bookedReservation = reservationService.bookRoom(reservation);
         return new ResponseEntity<>(bookedReservation, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/cancel/{id}")
     public ResponseEntity<Void> cancelReservation(@PathVariable Long id) {
         reservationService.cancelReservation(id);
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/change/{id}")
     public ResponseEntity<Reservation> changeReservation(@PathVariable Long id, @RequestBody Reservation updatedReservation) {
         Reservation changedReservation = reservationService.changeReservation(id, updatedReservation);
         if (changedReservation != null) {

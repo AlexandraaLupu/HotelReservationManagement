@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
+// this is for initializing the db with the json file
 @Configuration
 public class DataInitializer{
     private final HotelRepository hotelRepository;
